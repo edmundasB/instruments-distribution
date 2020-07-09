@@ -1,0 +1,10 @@
+﻿Transakcijos ID;Šaltinio sąskaita;Gavėjo sąskaita;Instrumentas;Pervedimo suma
+1;Company1;VP0001;Company1 stocks;1000
+2;VP0001;VP0002;Company1 stocks;800
+3;VP0002;VP0003;Company1 stocks;700
+4;VP0003;VP0004;Company1 stocks;100
+5;VP0003;VP0005;Company1 stocks;100
+6;VP0003;VP0006;Company1 stocks;100
+7;VP0003;VP0007;Company1 stocks;100
+8;VP0003;VP0008;Company1 stocks;100
+9;VP0003;VP0009;Company1 stocks;100

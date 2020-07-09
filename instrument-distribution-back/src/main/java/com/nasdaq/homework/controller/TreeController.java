@@ -1,0 +1,31 @@
+package com.nasdaq.homework.controller;
+
+import com.nasdaq.homework.tree.Tree;
+import com.nasdaq.homework.tree.Node;
+import com.nasdaq.homework.exceptions.TreeNotFoundException;
+import com.nasdaq.homework.model.Transaction;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/v1/ledger")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class TreeController {
+    private final Tree service;
+    public TreeController(Tree service) {
+        this.service = service;
+    }
+
+    @GetMapping("/tree")
+    public ResponseEntity<Node<Transaction>> fetchTree(@RequestParam(required = false) String account) {
+        try {
+             if(account != null && !account.isEmpty()) {
+                return ResponseEntity.ok(service.fetchTree(account));
+            } else {
+                return ResponseEntity.ok(service.fetchTree());
+            }
+        } catch (TreeNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+}

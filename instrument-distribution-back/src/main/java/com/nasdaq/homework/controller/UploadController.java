@@ -4,7 +4,6 @@ import com.nasdaq.homework.tree.Tree;
 import com.nasdaq.homework.model.Transaction;
 import com.nasdaq.homework.service.DataExtractorFactory;
 import com.nasdaq.homework.model.ExtractorType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,10 +15,8 @@ import java.util.List;
 @RequestMapping("/v1/upload")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UploadController {
-    @Autowired
-    private Tree tree;
-    @Autowired
-    private DataExtractorFactory dataExtractorFactory;
+    private final Tree tree;
+    private final DataExtractorFactory dataExtractorFactory;
 
     @PostMapping
     public ResponseEntity<String> loadLedger(@RequestParam MultipartFile ledgerCsv) throws Exception {
@@ -31,5 +28,10 @@ public class UploadController {
         tree.load(transactionList);
 
         return ResponseEntity.ok().build();
+    }
+
+    public UploadController(DataExtractorFactory dataExtractorFactory, Tree tree) {
+        this.dataExtractorFactory = dataExtractorFactory;
+        this.tree = tree;
     }
 }

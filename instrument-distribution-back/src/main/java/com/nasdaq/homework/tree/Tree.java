@@ -29,19 +29,26 @@ public class Tree {
                 Node<Transaction> newNode = response.addChild(response, child.getAccountFrom(), child);
                 newNode.addChild(newNode, child.getAccountTo(), child);
             }
-
         }
         return response;
     }
 
-    public Node<Transaction> fetchTree() throws TreeNotFoundException {
+    public Node<Transaction> fetchTree(String accountName) throws TreeNotFoundException {
+        if(accountName != null && !accountName.isEmpty()){
+            return filteredTree(accountName);
+        } else{
+            return fetchTree();
+        }
+    }
+
+    private Node<Transaction> fetchTree() throws TreeNotFoundException {
         if(root == null){
             throw new TreeNotFoundException("Tree not loaded.");
         }
         return root;
     }
 
-    public Node<Transaction> fetchTree(String name) {
+    private Node<Transaction> filteredTree(String name) {
         List<Node<Transaction>> nodeList = root.searchMultiple(name);
         List<Transaction> foundPathTransactions = new ArrayList<>();
 

@@ -5,11 +5,11 @@ import org.apache.commons.csv.CSVRecord;
 import java.math.BigDecimal;
 
 public class Transaction {
-    private String id;
-    private String accountFrom;
-    private String accountTo;
-    private String instrument;
-    private BigDecimal amount;
+    private final String id;
+    private final String accountFrom;
+    private final String accountTo;
+    private final String instrument;
+    private final BigDecimal amount;
 
     public Transaction(CSVRecord record) {
         this.id = record.get(0);

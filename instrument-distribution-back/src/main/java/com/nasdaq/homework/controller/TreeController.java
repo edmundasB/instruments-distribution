@@ -19,11 +19,7 @@ public class TreeController {
     @GetMapping("/tree")
     public ResponseEntity<Node<Transaction>> fetchTree(@RequestParam(required = false) String account) {
         try {
-             if(account != null && !account.isEmpty()) {
-                return ResponseEntity.ok(service.fetchTree(account));
-            } else {
-                return ResponseEntity.ok(service.fetchTree());
-            }
+            return ResponseEntity.ok(service.fetchTree(account));
         } catch (TreeNotFoundException e) {
             return ResponseEntity.notFound().build();
         }

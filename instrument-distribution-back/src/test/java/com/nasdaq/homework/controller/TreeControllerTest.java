@@ -31,14 +31,14 @@ class TreeControllerTest extends ControllerTest {
 
     @Test
     public void getLedgerTreeWhenStatus200OK() throws Exception {
-        Mockito.when(service.fetchTree()).thenReturn(new Node<>("Some tree"));
+        Mockito.when(service.fetchTree(null)).thenReturn(new Node<>("Some tree"));
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .get("/v1/ledger/tree")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
-        Mockito.verify(service, Mockito.times(1)).fetchTree();
+        Mockito.verify(service, Mockito.times(1)).fetchTree(null);
 
         String responseString = mvcResult.getResponse().getContentAsString();
         Node<Transaction> treeDto = gson.fromJson(responseString, Node.class);
@@ -68,7 +68,7 @@ class TreeControllerTest extends ControllerTest {
 
     @Test
     public void getLedgerTreeWhenStatus404NotFound() throws Exception {
-        Mockito.when(service.fetchTree()).thenThrow(new TreeNotFoundException(""));
+        Mockito.when(service.fetchTree(null)).thenThrow(new TreeNotFoundException(""));
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/v1/ledger/tree")
 
@@ -76,6 +76,6 @@ class TreeControllerTest extends ControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
 
-        Mockito.verify(service, Mockito.times(1)).fetchTree();
+        Mockito.verify(service, Mockito.times(1)).fetchTree(null);
     }
 }

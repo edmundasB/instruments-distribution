@@ -4,6 +4,7 @@ import com.nasdaq.homework.service.CSVDataExtractor;
 import com.nasdaq.homework.service.DataExtractorFactory;
 import com.nasdaq.homework.model.ExtractorType;
 import com.nasdaq.homework.tree.Tree;
+import com.nasdaq.homework.fixtures.InputPropertiesFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,7 +28,7 @@ class UploadControllerTest extends ControllerTest {
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        when(dataExtractorFactory.getDataExtractor(eq(ExtractorType.CSV))).thenReturn(new CSVDataExtractor());
+        when(dataExtractorFactory.getDataExtractor(eq(ExtractorType.CSV))).thenReturn(new CSVDataExtractor(InputPropertiesFixture.get()));
     }
 
     @Test

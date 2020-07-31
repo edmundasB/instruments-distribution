@@ -4,39 +4,43 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Node<T> {
-    private static AtomicInteger depth;
-    private T data;
-    private static List multipleNodesSearchResult = new ArrayList<>();
-    private final String name;
+    private final T data;
+    private final String key;
     private Node<T> parent;
-    private final List<Node<T>> children = new ArrayList<>();
+    private  Node<T> leftChild;
+    private  Node<T> rightSibling;
+    private List<Node<T>> children = new ArrayList<>();
 
-    public Node(String nodeName) {
-        this.name = nodeName;
-        depth = new AtomicInteger(0);
+    Node(NodeBuilder<T> builder) {
+        this.data = builder.getData();
+        this.key = builder.getKey();
+        this.parent = builder.getParent();
     }
 
-    public Node(Node<T> parent, String name, T data) {
-        this.parent = parent;
-        this.name = name;
-        this.data = data;
+    public Node<T> getLeftChild() {
+        return leftChild;
     }
 
-    public String getName() {
-        return name;
+    public void setLeftChild(Node<T> leftChild) {
+        this.leftChild = leftChild;
+    }
+
+    public Node<T> getRightSibling() {
+        return rightSibling;
+    }
+
+    public void setRightSibling(Node<T> rightSibling) {
+        this.rightSibling = rightSibling;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public T getData() {
         return data;
-    }
-
-    @JsonIgnore
-    public long getDepth() {
-        return depth.get();
     }
 
     @JsonIgnore
@@ -48,48 +52,23 @@ public class Node<T> {
         return children;
     }
 
-    public Node<T> addChild(Node<T> parent, String childName, T childData) {
-        Node<T> childNode = new Node<T>(parent, childName, childData);
-        if(this.children.isEmpty()){
-            depth.incrementAndGet();
-        }
-        children.add(childNode);
-
-        return childNode;
+    boolean hasChildren() {
+        return this.children.isEmpty();
     }
 
-    public Optional<Node<T>> search(String searchName) {
-        Optional<Node<T>> result = Optional.empty();
-        if(this.name.equals(searchName)){
-            result =  Optional.of(this);
-        }
-
-        for (Node<T> child: children){
-            Optional<Node<T>> foundInChild = child.search(searchName);
-            if(foundInChild.isPresent()){
-                return foundInChild;
-            }
-        }
-
-        return result;
-    }
-
-    public List<Node<T>> searchMultiple(String searchName) {
-        multipleNodesSearchResult = new ArrayList<>();
-
-        if(this.name.equals(searchName)){
-            multipleNodesSearchResult.add(this);
-        }
-
-        for (Node<T> child: children){
-            Optional<Node<T>> foundInChild = child.search(searchName);
-            foundInChild.ifPresent(multipleNodesSearchResult::add);
-        }
-
-        return multipleNodesSearchResult;
+    boolean isNotLeaf(){
+        return !hasChildren();
     }
 
     public T getAttributes() {
         return data;
+    }
+
+    public void setParent(Node<T> copied) {
+        this.parent = copied;
+    }
+
+    public void addChildToList(Node<T> child) {
+        this.children.add(child);
     }
 }

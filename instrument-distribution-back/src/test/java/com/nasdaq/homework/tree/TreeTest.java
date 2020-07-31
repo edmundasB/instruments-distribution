@@ -31,36 +31,34 @@ class TreeTest {
 
     @Test
     void makeTransactionsTreeFromList() throws TreeNotFoundException {
-        Assertions.assertEquals(5, tree.fetchTree(null).getDepth());
-
-        Assertions.assertEquals(1, tree.fetchTree(null).search("Company1").get().getChildren().size());
-        Assertions.assertEquals(1, tree.fetchTree(null).search("VP0001").get().getChildren().size());
-        Assertions.assertEquals(1, tree.fetchTree(null).search("VP0002").get().getChildren().size());
-        Assertions.assertEquals(6, tree.fetchTree(null).search("VP0003").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName("Company1").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName("VP0001").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName("VP0002").get().getChildren().size());
+        Assertions.assertEquals(6, tree.searchFirstNodeByName("VP0003").get().getChildren().size());
     }
 
     @Test
     void fetchTreeByLastLeafAccountNoThenCheckFullTree() throws TreeNotFoundException {
         Node<Transaction> filteredTree = tree.fetchTree("VP0008");
 
-        Assertions.assertEquals(1, filteredTree.search("Company1").get().getChildren().size());
-        Assertions.assertEquals(1, filteredTree.search("VP0001").get().getChildren().size());
-        Assertions.assertEquals(1, filteredTree.search("VP0002").get().getChildren().size());
-        Assertions.assertEquals(1, filteredTree.search("VP0003").get().getChildren().size());
-        Assertions.assertEquals(0, filteredTree.search("VP0008").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName(filteredTree, "Company1").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName(filteredTree, "VP0001").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName(filteredTree, "VP0002").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName(filteredTree, "VP0003").get().getChildren().size());
+        Assertions.assertEquals(0, tree.searchFirstNodeByName(filteredTree, "VP0008").get().getChildren().size());
 
         Node<Transaction> fullTree = tree.fetchTree(null);
 
-        Assertions.assertEquals(6, fullTree.search("VP0003").get().getChildren().size());
+        Assertions.assertEquals(6, tree.searchFirstNodeByName("VP0003").get().getChildren().size());
     }
 
     @Test
     void fetchTreeByMiddleAccountNo() throws TreeNotFoundException {
         Node<Transaction> filteredTree = tree.fetchTree("VP0002");
 
-        Assertions.assertEquals(1, filteredTree.search("Company1").get().getChildren().size());
-        Assertions.assertEquals(1, filteredTree.search("VP0001").get().getChildren().size());
-        Assertions.assertEquals(0, filteredTree.search("VP0002").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName(filteredTree, "Company1").get().getChildren().size());
+        Assertions.assertEquals(1, tree.searchFirstNodeByName(filteredTree, "VP0001").get().getChildren().size());
+        Assertions.assertEquals(0, tree.searchFirstNodeByName(filteredTree, "VP0002").get().getChildren().size());
     }
 
     @Test

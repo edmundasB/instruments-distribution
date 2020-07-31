@@ -2,6 +2,7 @@ package com.nasdaq.homework.controller;
 
 import com.nasdaq.homework.exceptions.TreeNotFoundException;
 import com.nasdaq.homework.model.Transaction;
+import com.nasdaq.homework.tree.NodeBuilder;
 import com.nasdaq.homework.tree.Tree;
 import com.nasdaq.homework.tree.Node;
 import org.junit.jupiter.api.Assertions;
@@ -31,7 +32,7 @@ class TreeControllerTest extends ControllerTest {
 
     @Test
     public void getLedgerTreeWhenStatus200OK() throws Exception {
-        Mockito.when(service.fetchTree(null)).thenReturn(new Node<>("Some tree"));
+        Mockito.when(service.fetchTree(null)).thenReturn(new NodeBuilder<Transaction>("CSD").build());
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .get("/v1/ledger/tree")
                 .accept(MediaType.APPLICATION_JSON)
@@ -49,7 +50,7 @@ class TreeControllerTest extends ControllerTest {
     @Test
     public void getLedgerTreeByQueryThenStatus200OK() throws Exception {
         String accountForSearch = "VP0001";
-        Mockito.when(service.fetchTree(eq(accountForSearch))).thenReturn(new Node<>("Some tree"));
+        Mockito.when(service.fetchTree(eq(accountForSearch))).thenReturn(new NodeBuilder<Transaction>("CSD").build());
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .get("/v1/ledger/tree?account="+accountForSearch)

@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
-public class ControllerTest {
+abstract class ControllerTest {
     public MockMvc mockMvc;
     public Gson gson = new Gson();
 }

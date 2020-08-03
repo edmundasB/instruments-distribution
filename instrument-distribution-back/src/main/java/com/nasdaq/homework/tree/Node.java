@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Node<T> {
     private final T data;
-    private final String key;
+    private final String name;
     private Node<T> parent;
     private  Node<T> leftChild;
     private  Node<T> rightSibling;
@@ -15,10 +15,11 @@ public class Node<T> {
 
     Node(NodeBuilder<T> builder) {
         this.data = builder.getData();
-        this.key = builder.getKey();
+        this.name = builder.getKey();
         this.parent = builder.getParent();
     }
 
+    @JsonIgnore
     public Node<T> getLeftChild() {
         return leftChild;
     }
@@ -27,6 +28,7 @@ public class Node<T> {
         this.leftChild = leftChild;
     }
 
+    @JsonIgnore
     public Node<T> getRightSibling() {
         return rightSibling;
     }
@@ -35,10 +37,10 @@ public class Node<T> {
         this.rightSibling = rightSibling;
     }
 
-    public String getKey() {
-        return key;
+    public String getName() {
+        return name;
     }
-
+    @JsonIgnore
     public T getData() {
         return data;
     }

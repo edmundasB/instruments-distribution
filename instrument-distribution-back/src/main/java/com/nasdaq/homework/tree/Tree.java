@@ -101,7 +101,7 @@ public class Tree implements TreeInterface {
     }
 
     private void depthFirstPathSearch(Node<Transaction> rt, String key){
-        if(rt.getKey().equals(key)){
+        if(rt.getName().equals(key)){
             Node<Transaction> path = extractPathToNode(rt);
             filteredPaths.add(path);
         }
@@ -121,7 +121,7 @@ public class Tree implements TreeInterface {
 
     protected Optional<Node<Transaction>> searchFirstNodeByName(Node<Transaction> rt, String nodeKey) {
         Optional<Node<Transaction>> result = Optional.empty();
-        if(rt.getKey().equals(nodeKey)){
+        if(rt.getName().equals(nodeKey)){
             result =  Optional.of(rt);
         }
 
@@ -136,12 +136,12 @@ public class Tree implements TreeInterface {
     }
 
     private static Node<Transaction> extractPathToNode(Node<Transaction> rt) {
-        Node<Transaction> active = new NodeBuilder<Transaction>(rt.getKey()).data(rt.getData()).build();
+        Node<Transaction> active = new NodeBuilder<Transaction>(rt.getName()).data(rt.getData()).build();
         Node<Transaction> current = rt;
 
         while(current.getParent() != null) {
             current = current.getParent();
-            Node<Transaction> copied = new NodeBuilder<Transaction>(current.getKey()).data(current.getData()).build();
+            Node<Transaction> copied = new NodeBuilder<Transaction>(current.getName()).data(current.getData()).build();
             copied.setLeftChild(active);
             copied.addChildToList(active);
             active.setParent(copied);

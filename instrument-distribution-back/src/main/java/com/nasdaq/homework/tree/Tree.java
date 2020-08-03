@@ -29,8 +29,7 @@ public class Tree implements TreeInterface {
         }
     }
 
-    @Override
-    public void addBranch(Node<Transaction> parent, Node<Transaction> leftChild) {
+    private void addBranch(Node<Transaction> parent, Node<Transaction> leftChild) {
         addChild(parent, leftChild);
     }
 

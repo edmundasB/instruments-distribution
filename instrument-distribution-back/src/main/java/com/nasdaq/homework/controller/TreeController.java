@@ -4,6 +4,7 @@ import com.nasdaq.homework.tree.Tree;
 import com.nasdaq.homework.tree.Node;
 import com.nasdaq.homework.exceptions.TreeNotFoundException;
 import com.nasdaq.homework.model.Transaction;
+import com.nasdaq.homework.tree.TreeInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/ledger")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TreeController {
-    private final Tree service;
+    private final TreeInterface service;
     public TreeController(Tree service) {
         this.service = service;
     }
